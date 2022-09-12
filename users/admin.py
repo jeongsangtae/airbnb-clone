@@ -40,6 +40,7 @@ class CustomUserAdmin(UserAdmin):
         "last_name",
         "email",
         "is_active",
+        "language",
         "currency",
         "superhost",
         "is_staff",
