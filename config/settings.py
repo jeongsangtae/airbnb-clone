@@ -39,7 +39,7 @@ DJANGO_APPS = [
     "django.contrib.staticfiles",
 ]
 
-THIRD_PARTY_APPS = ["django_countries", "django_seed"]
+THIRD_PARTY_APPS = ["django_countries", "django_seed", "send_gmail"]
 
 PROJECT_APPS = [
     "core.apps.CoreConfig",
@@ -140,3 +140,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
 MEDIA_URL = "/media/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
+
+# Email Configuration
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMIAL_PORT = "587"
+EMAIL_HOST_USER = os.environ.get("G_USERNAME")
+EMAIL_HOST_PASSWORD = os.environ.get("G_PASSWORD")  # past the key or password app here
+EMAIL_FROM = "wjdtkdxo55@naver.com"
+EMAIL_USE_TLS = True
