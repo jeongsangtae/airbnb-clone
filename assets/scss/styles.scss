@@ -45,15 +45,19 @@ form {
 @keyframes messageFadeIn {
   0%{
     opacity: 0;
+    transform: translateY(-50px);
   }
   5%{
     opacity: 1;
+    transform: translateY(50px);
   }
   95%{
     opacity: 1;
+    transform: translateY(50px);
   }
   100%{
     opacity: 0;
+    transform: translateY(-50px);
   }
 }
 
