@@ -157,8 +157,7 @@ def delete_photo(request, room_pk, photo_pk):
     user = request.user
     try:
         room = models.Room.objects.get(pk=room_pk)
-        photo = models.Photo.objects.get(pk=photo_pk)
-        if not (room.host.pk == user.pk and user.pk == photo.room.pk):
+        if room.host.pk != user.pk:
             messages.error(request, "Can't delete that photo")
         else:
             models.Photo.objects.filter(pk=photo_pk).delete()
@@ -181,7 +180,7 @@ class EditPhotoView(user_mixins.LoggedInOnlyView, SuccessMessageMixin, UpdateVie
         return reverse("rooms:photos", kwargs={"pk": room_pk})
 
 
-class AddPhotoView(user_mixins.LoggedInOnlyView, SuccessMessageMixin, FormView):
+class AddPhotoView(user_mixins.LoggedInOnlyView, FormView):
 
     model = models.Photo
     template_name = "rooms/photo_create.html"
@@ -191,3 +190,5 @@ class AddPhotoView(user_mixins.LoggedInOnlyView, SuccessMessageMixin, FormView):
     def form_valid(self, form):
         pk = self.kwargs.get("pk")
         form.save(pk)
+        messages.success(self.request, "Photo Uploaded")
+        return redirect(reverse("rooms:photos", kwargs={"pk": pk}))
