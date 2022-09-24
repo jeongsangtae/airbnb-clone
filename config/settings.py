@@ -153,3 +153,8 @@ EMAIL_HOST_USER = os.environ.get("G_USERNAME")
 EMAIL_HOST_PASSWORD = os.environ.get("G_PASSWORD")  # past the key or password app here
 EMAIL_FROM = "wjdtkdxo55@naver.com"
 EMAIL_USE_TLS = True
+
+
+# Auth
+
+LOGIN_URL = "/users/login"
