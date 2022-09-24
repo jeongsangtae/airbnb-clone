@@ -1,5 +1,5 @@
 from django.http import Http404
-from django.views.generic import ListView, DetailView, View, UpdateView
+from django.views.generic import ListView, DetailView, View, UpdateView, FormView
 from django.shortcuts import render, redirect, reverse
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
@@ -157,7 +157,8 @@ def delete_photo(request, room_pk, photo_pk):
     user = request.user
     try:
         room = models.Room.objects.get(pk=room_pk)
-        if room.host.pk != user.pk:
+        photo = models.Photo.objects.get(pk=photo_pk)
+        if not (room.host.pk == user.pk and user.pk == photo.room.pk):
             messages.error(request, "Can't delete that photo")
         else:
             models.Photo.objects.filter(pk=photo_pk).delete()
@@ -178,3 +179,15 @@ class EditPhotoView(user_mixins.LoggedInOnlyView, SuccessMessageMixin, UpdateVie
     def get_success_url(self):
         room_pk = self.kwargs.get("room_pk")
         return reverse("rooms:photos", kwargs={"pk": room_pk})
+
+
+class AddPhotoView(user_mixins.LoggedInOnlyView, SuccessMessageMixin, FormView):
+
+    model = models.Photo
+    template_name = "rooms/photo_create.html"
+    fields = ("caption", "file")
+    form_class = forms.CreatePhotoForm
+
+    def form_valid(self, form):
+        pk = self.kwargs.get("pk")
+        form.save(pk)
