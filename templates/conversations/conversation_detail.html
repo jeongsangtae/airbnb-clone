@@ -25,7 +25,8 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="border flex-grow ml-10 p-10 flex flex-col bg-blue-200">
+        <div class="flex-grow">
+          <div class="border ml-10 p-10 flex flex-col bg-blue-200">
             {% if conversation.messages.count == 0 %}
                 no messages
             {% else %}
@@ -48,6 +49,12 @@
                     </div>
                 {% endfor %}
             {% endif %}
+          </div>
+              <form class="mt-10 w-1/2 mx-auto" method="POST">
+                  {% csrf_token %}
+                  <input class="border-box mb-5" name="message" placeholder="Write a Message" required />
+                  <button class="btn-link">Send Comment</button>
+              </form>
         </div>
 
     </div>
