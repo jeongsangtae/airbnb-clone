@@ -12,6 +12,7 @@ django-dotenv = "*"
 django = "==2.2.5"
 requests = "*"
 pipenv-to-requirements = "*"
+django-storages = "*"
 
 [dev-packages]
 awsebcli = "*"
